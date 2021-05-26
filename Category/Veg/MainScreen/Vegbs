@@ -1,0 +1,132 @@
+import React , {useState} from 'react';
+import { View , Alert , StyleSheet,StatusBar,Text, TouchableOpacity,Image,ScrollView,Dimensions, FlatList} from 'react-native';
+import { Card } from 'react-native-paper';
+import {AdMobBanner} from 'expo-ads-admob';
+import {Icon} from 'react-native-elements'
+import { ActivityIndicator } from 'react-native';
+import db from './localdb'
+
+export default class VegMainScreen extends React.Component {
+
+  constructor(){
+    super();
+    
+    this.state={
+      data:[],
+      page:1,
+      isLoading:false
+    }
+  }
+
+  componentDidMount(){
+    const apiUrl = 'http://jsonplaceholder.typicode.com/photos?_limit=10&_page=1'
+    fetch(apiUrl).then(res=>res.json())
+    .then(resjson=>{
+        this.setState({data : resjson})
+    })
+    
+  }
+  
+ 
+renderView=({item})=>{
+
+  return (
+
+    <View style={{backgroundColor:'#9acd32'}}>
+
+    <View  style={{backgroundColor:'#9acd32',justifyContent:'center',alignItems:'center',marginVertical:50}}>
+
+
+<View style={{}}>
+
+            <TouchableOpacity style={{flexDirection:'column',justifyContent:'space-between',alignItems:'center'}}
+            onPress={()=>{this.props.navigation.navigate('Aloo_Tamatar_Ka_Jhol')}}>
+
+            <View>
+
+              <Image style={{borderRadius:10,width:Dimensions.get("window").width-25,height:Dimensions.get("window").height-550}} source={{uri: item.url}}></Image>
+            
+            </View>
+              
+              <View style={{alignItems:'flex-start',marginLeft:18,justifyContent:'flex-end',borderRadius:5,height:50,width:'100%'}}>
+                
+                <Text style={{fontSize:23,fontStyle:'italic',fontWeight:'bold',color:'#ffffff'}}>{item.title}</Text>
+
+              </View>
+
+            </TouchableOpacity>
+
+</View>
+
+</View>
+
+
+
+    </View>
+
+    
+  );
+
+}
+
+handleLoadMore=async()=>{
+  await this.setState({page : this.state.page+1,isLoading:false})
+
+  const apiUrl = 'http://jsonplaceholder.typicode.com/photos?_limit=10&_page='+this.state.page
+  fetch(apiUrl).then(res=>res.json())
+  .then(resjson=>{
+      this.setState({data : this.state.data.concat(resjson),isLoading:false})
+  })
+  console.log(this.state.data)
+}
+
+loading=()=>{
+  return(
+    <View style={{backgroundColor:'#9acd32'}}>
+      <ActivityIndicator style={{marginVertical:25}} loading={this.state.isLoading} size='large' color='white' />
+    </View>
+  )
+}
+
+    render() {
+      return(
+        <View>
+          <FlatList
+          
+          data={db}
+          renderItem={this.renderView}
+          keyExtractor={(item,index)=>index.toString()}
+          onEndReached={this.handleLoadMore}
+          ListFooterComponent={this.loading}
+          
+          >
+
+          </FlatList>
+        </View>
+      )
+     
+    }
+  }
+
+  
+
+
+
+  // handleLoadMore=async()=>{
+  //   await this.setState({page : this.state.page+1,isLoading:false})
+
+  //   const apiUrl = 'http://jsonplaceholder.typicode.com/photos?_limit=10&_page='+this.state.page
+  //   fetch(apiUrl).then(res=>res.json())
+  //   .then(resjson=>{
+  //       this.setState({data : this.state.data.concat(resjson),isLoading:false})
+  //   })
+  //   console.log(this.state.data)
+  // }
+
+  // loading=()=>{
+  //   return(
+  //     <View style={{backgroundColor:'#9acd32'}}>
+  //       <ActivityIndicator style={{marginVertical:25}} loading={this.state.isLoading} size='large' color='white' />
+  //     </View>
+  //   )
+  // }

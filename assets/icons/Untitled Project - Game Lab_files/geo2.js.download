@@ -1,0 +1,16 @@
+(function(){
+  window['optimizely'] = window['optimizely'] || [];
+  window['optimizely'].push(['activateGeoDelayedExperiments', {
+    'location':{
+      'city': "AHMEDABAD",
+      'continent': "AS",
+      'country': "IN",
+      'region': "GJ"
+    },
+    'ip':"27.109.30.65"
+  }]);
+})
+//
+()
+
+;

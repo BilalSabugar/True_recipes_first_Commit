@@ -1,0 +1,208 @@
+import React from 'react';
+import {View,Text,StyleSheet,Image,TextInput,TouchableOpacity,Alert,KeyboardAvoidingView, ScrollView} from 'react-native';
+import * as firebase from 'firebase'
+import ImageLoad from 'react-native-image-placeholder';
+import { StatusBar } from 'react-native';
+import MyHeader from '../Header/BackHeader';
+
+export default class Signup extends React.Component {
+
+
+    constructor(){
+        super();
+        this.state={
+          emailId : '',
+          password: '',
+          confirmPassword:''
+        }
+      }
+    
+      userSignUp=(emailId,password,confirmPassword)=>{
+        if(password !== confirmPassword){
+          return Alert.alert("password doesn't match\nCheck your password.")
+      }else{
+        const response =  firebase.auth().createUserWithEmailAndPassword(emailId, password).then(()=>{
+
+          if(response){
+            this.props.navigation.replace('WelcomeScreen')
+            return  Alert.alert(
+          'User Added Successfully'
+          )
+            } 
+          
+        }).
+        catch((error)=>{
+          switch (error.code) {
+            case 'auth/user-not-found':
+              Alert.alert("user dosen't exists")
+              break
+            case 'auth/invalid-email':
+              Alert.alert('incorrect format email')
+              break
+            case 'auth/wrong-password':
+                Alert.alert('Invalid Password')
+                break
+            case 'auth/email-already-in-use':
+                  Alert.alert('Email already in use.\nTry using dfferent email')
+                  break
+            case 'auth/invalid-password':
+                    Alert.alert('incorrect format password')
+                  break
+
+              
+          }
+        })
+        
+      } 
+          }
+          
+        
+
+    
+      
+  render(){
+
+
+      return(
+        <View style={{backgroundColor:'#4A4A4A'}}>
+        
+        <ScrollView>
+        <KeyboardAvoidingView style = {{alignItems:'center',marginTop:20,flex:1}}>
+        <View>
+        <ImageLoad
+            source={require("../assets/Logo.png")}
+            style={{width:350, height: 350,marginTop:20}}/>
+          
+        </View>
+        <View style={{flex:1,width:'100%'}}>
+
+
+          
+        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+
+<View>
+  <Image source={require('../assets/username.png')} style={{height:50,width:50,left:20}}></Image>
+</View>
+
+        <TextInput
+          style={styles.loginBoxE}
+          placeholder="Enter New Email"
+          keyboardType ='email-address'
+          onChangeText={(text)=>{
+            this.setState({
+              emailId: text
+            })
+          }}
+        />
+    </View>
+
+
+<View style={{flexDirection:'row',justifyContent:'space-around'}}>
+
+<View>
+  <Image source={require('../assets/password.png')} style={{height:50,width:50,left:20}}></Image>
+</View>
+
+        <TextInput
+          style={styles.loginBoxP}
+          placeholder="Enter New Password"
+          secureTextEntry = {true}
+          onChangeText={(text)=>{
+            this.setState({
+              password: text
+            })
+          }}
+          pattern={[
+            '^.{8,}$', // min 8 chars
+            '(?=.*\\d)', // number required
+            '(?=.*[A-Z])', // uppercase letter
+          ]}
+        />
+
+
+ </View>
+
+ <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+
+            <View>
+              <Image source={require('../assets/password.png')} style={{height:50,width:50,left:20}}></Image>
+            </View>
+
+        <TextInput
+          style={styles.loginBoxP}
+          placeholder ={"Confrim Password"}
+          secureTextEntry = {true}
+          onChangeText={(text)=>{
+            this.setState({
+              confirmPassword: text
+            })
+          }}
+        />
+
+</View>
+
+        </View>
+        <View>
+          <TouchableOpacity style={styles.SignUpButton}
+          onPress={()=>{this.userSignUp(this.state.emailId ,this.state.password,this.state.confirmPassword)}}>
+            <Text style={{textAlign:'center'}}>Signup</Text>
+          </TouchableOpacity>
+
+        </View>
+      </KeyboardAvoidingView>
+      </ScrollView>
+      <View style={{height:600}}></View>
+    </View>
+      )
+  }
+}
+
+
+const styles = StyleSheet.create({
+  
+  loginBoxE: {
+    marginBottom: 10,
+    paddingBottom: 15,
+    textAlignVertical:'center',
+    textAlign: 'center',
+    height:'78%',
+    borderRadius:20,
+    marginRight:5,
+    backgroundColor:'rgba(255,255,255,0.75)',
+    width:'70%',
+  },  
+  loginBoxP: {
+    marginBottom: 10,
+    paddingBottom: 15,
+    textAlignVertical:'center',
+    textAlign: 'center',
+    height:'78%',
+    borderRadius:20,
+    marginRight:5,
+    backgroundColor:'rgba(255,255,255,0.75)',
+    width:'70%',
+  },
+  SignUpButton:{
+    marginVertical: 10,
+    textAlignVertical:'center',
+    textAlign: 'center',
+    height:48,
+    borderRadius:20,
+    marginHorizontal:16,
+    elevation:10,
+    backgroundColor:'#57b847',
+    width:150,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  Image:{
+    height:75,
+    width:75
+  },
+  LoginButton:{
+    textAlignVertical:'center',
+    marginLeft:30,
+    marginTop:30,
+    alignSelf:'flex-start'
+  },
+})

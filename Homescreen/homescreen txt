@@ -1,0 +1,443 @@
+import React , {useState} from 'react';
+import { Switch,Text , View , StyleSheet , TouchableOpacity , Image , Alert , StatusBar , Modal , Linking, Button ,ScrollView,KeyboardAvoidingView,TextInput} from 'react-native';
+import * as firebase from 'firebase'; 
+import config from '../config';
+//import NetInfo from '@react-native-community/netinfo';
+import ImageLoad from 'react-native-image-placeholder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+export default class HomeScrollView extends React.Component {
+
+
+  constructor(){
+    super();
+    this.state={
+      toggle: false,
+
+      image1:'',
+      image2:'',
+      image3:'',
+      image4:'',
+      image5:'',
+      image6:'',
+      image7:'',
+      image8:'',
+      image9:'',
+      image10:'',
+
+      styleImage1:1,
+
+      Navigation1:'',
+      Navigation2:'',
+      Navigation3:'',
+      Navigation4:'',
+      Navigation5:'',
+      Navigation6:'',
+      Navigation7:'',
+      Navigation8:'',
+      Navigation9:'',
+      Navigation10:'',
+
+      Views:1,
+    }
+  }
+
+
+
+
+
+
+    render() {console.log(this.state.toggle)
+      return (
+        
+        <View  style={{backgroundColor:'#f0f0f0'}}>
+<View>
+
+
+
+{/* <TouchableOpacity
+          onPress={()=>{this.props.navigation.navigate('Catagory')}}>
+            <ImageLoad source={{uri:this.state.image1}} style = {{width:350,height:60}}></ImageLoad>
+          </TouchableOpacity> Startup */}
+
+          <View style={{marginTop:125}}>
+          <TouchableOpacity style={{marginTop:100}} onPress = {()=>{
+        this.props.navigation.toggleDrawer()
+      }} >
+          <Text style={{fontSize:20,alignSelf:'flex-start',marginBottom:10,marginLeft:10}}>This weeks top 10 recipes</Text>
+          </TouchableOpacity>
+          <ScrollView>
+
+
+
+
+
+
+
+
+          <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation1)}}>
+            <ImageLoad source={{uri:this.state.image1}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+         
+          <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation2)}}>
+            <ImageLoad source={{uri:this.state.image2}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation3)}}>
+            <ImageLoad source={{uri:this.state.image3}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+                    <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation4)}}>
+            <ImageLoad source={{uri:this.state.image4}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+                    <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation5)}}>
+            <ImageLoad source={{uri:this.state.image5}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+                    <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation6)}}>
+            <ImageLoad source={{uri:this.state.image6}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+
+
+                    <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation7)}}>
+            <ImageLoad source={{uri:this.state.image7}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+
+                    <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation8)}}>
+            <ImageLoad source={{uri:this.state.image8}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation9)}}>
+            <ImageLoad source={{uri:this.state.image9}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+                    <TouchableOpacity style={{marginTop:30,alignSelf:'center'}}
+          onPress={()=>{this.props.navigation.navigate(this.state.Navigation10)}}>
+            <ImageLoad source={{uri:this.state.image10}} style = {{width:300,height:100,borderRadius:50}}></ImageLoad>
+
+            <View style={{justifyContent:'space-between',flexDirection:'row'}}>
+
+
+              
+
+              <Switch
+                trackColor={{false: 'gray', true: '#C21E56'}}
+                thumbColor="white"
+                onValueChange={(value) => this.setState({toggle: value})}
+                value={this.state.toggle}>
+              </Switch>
+
+              <Text style={{alignSelf:'flex-end',backgroundColor: 'rgba(255, 255, 255, 0.5)',alignSelf:'flex-end',fontWeight:'bold'}}> Views:{this.state.Views}</Text>
+
+            </View>
+
+          </TouchableOpacity>
+
+
+
+
+
+
+
+
+          <Text style={{fontSize:20,alignSelf:'center', marginBottom:850 , marginTop:12.5}}>Thats much for this week</Text>
+
+
+
+
+
+
+
+
+          </ScrollView>
+          </View>
+          </View>
+          </View>
+        
+        
+      );
+    }
+  }
+
+  
+
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      marginLeft: 150
+    },
+    searchBar:{
+      flexDirection:'row',
+      height:55,
+      width:'auto',
+      alignItems:'center',
+      backgroundColor:'#5597ff',
+    },
+    modalContainer:{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor:"#ffff",
+      borderWidth:1,
+      borderColor:'black',
+      width:225
+    },
+
+  })
