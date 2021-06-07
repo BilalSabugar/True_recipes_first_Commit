@@ -3,9 +3,7 @@ import HomeScreen from '../Homescreen/HomeScreen'
 import Favourite from '../HomeItems/Favourite'
 import category from '../HomeItems/category'
 import Settings from '../screens/Settings'
-
-
-
+import WishList from '../screens/WishList'
 
 
 
@@ -18,70 +16,16 @@ import Deaserts from '../Category/Deaserts/MainScreen/Deaserts';
 
 
 
-
-
-
-
-import Wheat_Pasta_in_Mushroom_Sauce from '../Category/Veg/Recipies/Wheat Pasta in Mushroom Sauce'
-
-
-
-
-
-
-
-
-
-import Aloo_Tamatar_Ka_Jhol from '../Category/Veg/Recipies/Aloo_Tamatar_Ka_Jhol'
-
-
-
-
-
-
-
-import Tamarind_Rice from '../Category/Veg/Recipies/Tamarind_Rice'
-
-
-
-
-import Butter_Paneer from '../Category/Veg/Recipies/Butter_Paneer'
-
-
-
-
-
-import VGV_Vegetable_Sandwich from '../Category/Veg/Recipies/VGV_Vegetable_Sandwich'
-
-
-
-
-import Pommes_Gratin from '../Category/Veg/Recipies/Pommes_Gratin'
-
-
-
-
-
-
-
-import Vegetable_Pakoda from '../Category/Veg/Recipies/Vegetable_Pakoda'
-
-
-
-
-
-import Green_Pea_Upma from '../Category/Veg/Recipies/Green_Pea_Upma'
-
-
-
-
-
-import Vegetable_Fried_Rice from '../Category/Veg/Recipies/Vegetable_Fried_Rice'
-
-
-
-
-import Rajasthani_Kadhi_With_Tofu_Palak_Pakoda from '../Category/Veg/Recipies/Rajasthani_Kadhi_With_Tofu_Palak_Pakoda'
+import Wheat_Pasta_in_Mushroom_Sauce from '../Category/Veg/Recipies/Wheat Pasta in Mushroom Sauce';
+import Aloo_Tamatar_Ka_Jhol from '../Category/Veg/Recipies/Aloo_Tamatar_Ka_Jhol';
+import Tamarind_Rice from '../Category/Veg/Recipies/Tamarind_Rice';
+import Butter_Paneer from '../Category/Veg/Recipies/Butter_Paneer';
+import VGV_Vegetable_Sandwich from '../Category/Veg/Recipies/VGV_Vegetable_Sandwich';
+import Pommes_Gratin from '../Category/Veg/Recipies/Pommes_Gratin';
+import Vegetable_Pakoda from '../Category/Veg/Recipies/Vegetable_Pakoda';
+import Green_Pea_Upma from '../Category/Veg/Recipies/Green_Pea_Upma';
+import Vegetable_Fried_Rice from '../Category/Veg/Recipies/Vegetable_Fried_Rice';
+import Rajasthani_Kadhi_With_Tofu_Palak_Pakoda from '../Category/Veg/Recipies/Rajasthani_Kadhi_With_Tofu_Palak_Pakoda';
 
 
 
@@ -98,6 +42,7 @@ export const AppTabNavigator = createStackNavigator({
   Favourite : {screen:Favourite},
   Category : {screen:category},
   Settings : { screen : Settings },
+  WishList : { screen : WishList },
 
 
 

@@ -2,7 +2,7 @@
   "expo": {
     "name": "True_Recipes",
     "slug": "True_Recipes",
-    "version": "3.4.7",
+    "version": "4.5.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -16,12 +16,12 @@
       "**/*"
     ],
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.BlackHat.True_Recipes"
+      "package": "com.BlackHat.True_Recipes_Premium_Version"
     },
     "web": {
       "favicon": "./assets/favicon.png"

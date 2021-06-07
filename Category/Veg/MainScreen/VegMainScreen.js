@@ -5,6 +5,11 @@ import {AdMobBanner} from 'expo-ads-admob';
 import {Icon} from 'react-native-elements'
 import { ActivityIndicator } from 'react-native';
 import db from './localdb'
+import firebase from 'firebase'
+import config from '../../../config'
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs();
 
 export default class VegMainScreen extends React.Component {
 
@@ -15,18 +20,41 @@ export default class VegMainScreen extends React.Component {
       data:[],
       page:1,
       isLoading:false,
-      update:5
+      update:5,
+      Image:[],
+      Title:[],
+      navigation:[],
+      color:'white'
     }
+  }
+
+  WishList =()=>{
+    const userId = firebase.auth().currentUser.email
+    console.log("here in add request");
+    config
+    .collection('WishList')
+    .add({
+        "userId" : userId,
+        "Title" : this.state.Title,
+        "Image" : this.state.Image,
+        "navigation" : this.state.navigation
+
+    })
+
+
+    // this.setState({
+    //     requestId: randomRequestId
+    // })
+
+    return console.log(this.state.Title,this.state.Image)
+
+
   }
 
  
 
   componentDidMount(){    
-    // fetch(apiUrl).then(res=>res.json())
-    // .then(resjson=>{
-    //     this.setState({data : resjson})
-    // })
-    
+    console.disableYellowBox = true
   }
 
   fetchMoreData=()=>{
@@ -41,9 +69,11 @@ export default class VegMainScreen extends React.Component {
   
  
   renderView=({item})=>{
-    const apiUrl = item.url
+    const apiUrl = item.url;
+
 
     return (
+      
 
       <View style={{backgroundColor:'#9acd32'}}>
         <View  style={{backgroundColor:'#9acd32',justifyContent:'center',alignItems:'center',marginVertical:25}}>
@@ -66,6 +96,9 @@ export default class VegMainScreen extends React.Component {
 
             </TouchableOpacity>
 
+            <TouchableOpacity style={{alignSelf:'flex-start',marginTop:5,marginLeft:5}} onPress={()=>{this.setState({ Title:item.title , Image:item.url , navigation:item.navigation }) ,item.wishlistColor='red', this.WishList() }}>
+              <Icon type='font-awesome' name='heart' color={item.wishlistColor} size={30}/>
+            </TouchableOpacity>
 
 
           </View>
@@ -99,5 +132,3 @@ export default class VegMainScreen extends React.Component {
       
       }
     }
-
-    
