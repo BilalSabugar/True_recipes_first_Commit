@@ -20,19 +20,19 @@ export default class WishList extends Component{
   this.requestRef= null
   }
 
-    getDocId = async() =>{
-        config.collection('WishList')
-        .where('Title','==',this.state.Title)
-        .where('Image','==',this.state.Image)
-        .where('navigation','==',this.state.Navigation)
-        .get()
-          .then(snapshot => {
-            snapshot.forEach(doc => {
-              const data = doc.data();
-              this.setState({docId:doc.id})
-              })
-        }).then( await firebase.firestore().collection('WishList').doc(this.state.docId).delete() )
-      }
+  getDocId = async(i) =>{
+      config.collection('WishList')
+      .where('Title','==',i.Title)
+      .where('Image','==',i.Image)
+      .where('navigation','==',i.navigation)
+      .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            firebase.firestore().collection('WishList').doc(doc.id).delete()
+          })
+          
+      })
+    }
 
   getList =()=>{
     this.requestRef = config.collection("WishList").where('userId','==',this.state.userId)
@@ -59,7 +59,6 @@ export default class WishList extends Component{
   keyExtractor = (item, index) => index.toString()
 
   renderItem = ( {item, i} ) =>{
-
     return (
       <ListItem
         key={i}
@@ -75,17 +74,11 @@ export default class WishList extends Component{
               
               <Text style={{color:'#ffff'}}>View</Text>
             </TouchableOpacity>
-            
-            
           }
-
-          rightAvatar={<Icon type='font-awesome' name='trash-o' onPress={()=>{ this.setState({Title:item.Title,Image:item.Image,Navigation:item.navigation}),this.getDocId()}}/>}
-
-
-            
-        
-        
-
+          rightAvatar={<Icon type='font-awesome' name='trash-o' onPress={()=>{
+            console.log("delete"),
+            this.getDocId(item)
+          }}/>}
         bottomDivider
       />
     )

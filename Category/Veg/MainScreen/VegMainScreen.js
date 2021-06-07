@@ -28,107 +28,75 @@ export default class VegMainScreen extends React.Component {
     }
   }
 
-  WishList =()=>{
+  WishList =(i)=>{
     const userId = firebase.auth().currentUser.email
     console.log("here in add request");
     config
     .collection('WishList')
     .add({
         "userId" : userId,
-        "Title" : this.state.Title,
-        "Image" : this.state.Image,
-        "navigation" : this.state.navigation
-
+        "Title" : i.title,
+        "Image" : i.url,
+        "navigation" : i.navigation
     })
-
-
     // this.setState({
     //     requestId: randomRequestId
     // })
-
     return console.log(this.state.Title,this.state.Image)
-
-
   }
-
- 
 
   componentDidMount(){    
     console.disableYellowBox = true
   }
 
   fetchMoreData=()=>{
-
     const update = this.state.update
     this.setState({update:update+5})
     console.log(this.state.update)
-
   }
 
-
-  
- 
   renderView=({item})=>{
     const apiUrl = item.url;
-
-
     return (
-      
-
       <View style={{backgroundColor:'#9acd32'}}>
         <View  style={{backgroundColor:'#9acd32',justifyContent:'center',alignItems:'center',marginVertical:25}}>
           <View>
-
             <TouchableOpacity style={{flexDirection:'column',justifyContent:'space-between',alignItems:'center'}}
               onPress={()=>{this.props.navigation.navigate(item.navigation)}}>
-
               <View>
-
                 <Image style={{borderRadius:10,width:Dimensions.get("window").width-25,height:Dimensions.get("window").height-550}} source={apiUrl} ></Image>
-              
               </View>
                 
               <View style={{alignItems:'flex-start',marginLeft:18,justifyContent:'flex-end',borderRadius:5,height:50,width:'100%'}}>
-                
                 <Text style={{fontSize:23,fontStyle:'italic',fontWeight:'bold',color:'#ffffff'}}>{item.title}</Text>
-
               </View>
-
             </TouchableOpacity>
 
-            <TouchableOpacity style={{alignSelf:'flex-start',marginTop:5,marginLeft:5}} onPress={()=>{this.setState({ Title:item.title , Image:item.url , navigation:item.navigation }) ,item.wishlistColor='red', this.WishList() }}>
+            <TouchableOpacity style={{alignSelf:'flex-start',marginTop:5,marginLeft:5}} onPress={()=>{/*this.setState({ Title:item.title , Image:item.url , navigation:item.navigation }) ,*/item.wishlistColor='red', this.WishList(item)}}>
               <Icon type='font-awesome' name='heart' color={item.wishlistColor} size={30}/>
             </TouchableOpacity>
-
-
           </View>
         </View>
-      </View>
-
-      
+      </View>      
     );
-
   }
+  render() {
+    return(
+      <View>
+        <FlatList
+        
+        data={db.slice(0,this.state.update)}
+        renderItem={this.renderView}
+        keyExtractor={(item,index)=>index.toString()}
+        onEndReached={this.fetchMoreData}
+        
+        // ListFooterComponent={this.loading}
+        
+        >
 
-
-
-      render() {
-        return(
-          <View>
-            <FlatList
-            
-            data={db.slice(0,this.state.update)}
-            renderItem={this.renderView}
-            keyExtractor={(item,index)=>index.toString()}
-            onEndReached={this.fetchMoreData}
-            
-            // ListFooterComponent={this.loading}
-            
-            >
-
-            </FlatList>
-          </View>
-        )
-      
-      }
-    }
+        </FlatList>
+      </View>
+    )
+  
+  }
+}
