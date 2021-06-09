@@ -1,4 +1,4 @@
-const db = [
+var db = [
   {
     "albumId": 1,
     "id": 1,

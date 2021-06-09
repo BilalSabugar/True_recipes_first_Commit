@@ -6,6 +6,8 @@ import config from '../config'
 import MyHeader from '../components/MyHeader';
 import { Alert } from 'react-native';
 
+console.disableYellowBox = true
+
 export default class WishList extends Component{
   constructor(){
     super()
@@ -15,16 +17,19 @@ export default class WishList extends Component{
       Title:[],
       Image:[],
       Navigation:[],
-      docId:[]
+      docId:[],
+      isReady:false
     }
-  this.requestRef= null
+  this.requestRef = null
   }
 
   getDocId = async(i) =>{
+    const userId = firebase.auth().currentUser.email
       config.collection('WishList')
       .where('Title','==',i.Title)
       .where('Image','==',i.Image)
       .where('navigation','==',i.navigation)
+      .where('userId','==',userId)
       .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
@@ -35,11 +40,13 @@ export default class WishList extends Component{
     }
 
   getList =()=>{
-    this.requestRef = config.collection("WishList").where('userId','==',this.state.userId)
+    const userId = firebase.auth().currentUser.email
+    this.requestRef = config.collection("WishList").where('userId','==',userId)
     .onSnapshot((snapshot)=>{
       var WishList = snapshot.docs.map((doc) => doc.data())
       this.setState({
-        WishList : WishList
+        WishList : WishList,
+        isReady:true
       });
     })
   }
@@ -89,18 +96,26 @@ export default class WishList extends Component{
       <View style={{flex:1}}>
         <View style={{flex:1}}>
           {
-            this.state.WishList.length === 0
+            this.state.isReady
             ?(
-              <View style={styles.subContainer}>
-                <Text style={{ fontSize: 20}}>No Recipie Added</Text>
-              </View>
+              this.state.WishList.length === 0
+              ?(
+                <View style={styles.subContainer}>
+                  <Text style={{ fontSize: 20}}>No Recipie Added</Text>
+                </View>
+              )
+              :(
+                <FlatList
+                  keyExtractor={this.keyExtractor}
+                  data={this.state.WishList}
+                  renderItem={this.renderItem}
+                />
+              )
             )
             :(
-              <FlatList
-                keyExtractor={this.keyExtractor}
-                data={this.state.WishList}
-                renderItem={this.renderItem}
-              />
+              <View style={styles.subContainer}>
+                <Text style={{ fontSize: 20}}>Loading...</Text>
+              </View>
             )
           }
         </View>

@@ -17,42 +17,75 @@ export default class VegMainScreen extends React.Component {
     super();
     
     this.state={
-      data:[],
+      data:7,
       page:1,
       isLoading:false,
-      update:5,
-      Image:[],
-      Title:[],
-      navigation:[],
-      color:'white'
+      WishList:[]
     }
   }
 
   WishList =(i)=>{
     const userId = firebase.auth().currentUser.email
+    
+    const wList=this.state.WishList;
     console.log("here in add request");
-    config
-    .collection('WishList')
-    .add({
-        "userId" : userId,
-        "Title" : i.title,
-        "Image" : i.url,
-        "navigation" : i.navigation
+    if(wList.length == 0){
+      // item.wishlistColor='#fc4c4e',
+      config
+        .collection('WishList')
+        .add({
+            "userId" : userId,
+            "Title" : i.title,
+            "Image" : i.url,
+            "navigation" : i.navigation
+        })
+    }else{
+      var titles=[]
+      wList.map(
+        (doc)=>{
+          console.log("map",doc)
+          titles.push(doc.Title);
+        }
+      )
+      console.log(titles,titles.includes(i.title))
+      if(titles.includes(i.title)){
+        Alert.alert('Recipie alredy added in wishlist')
+      }
+      else{
+        // item.wishlistColor='#fc4c4e',
+        config
+        .collection('WishList')
+        .add({
+            "userId" : userId,
+            "Title" : i.title,
+            "Image" : i.url,
+            "navigation" : i.navigation
+        })
+      }
+    }
+    
+    
+  }
+
+  getWishList =()=>{
+    const userId = firebase.auth().currentUser.email
+    console.log("here in add request");
+    this.requestRef = config.collection("WishList").where('userId','==',userId)
+    .onSnapshot((snapshot)=>{
+      var WishList = snapshot.docs.map((doc) => doc.data())
+      this.setState({
+        WishList : WishList
+      });
     })
-    // this.setState({
-    //     requestId: randomRequestId
-    // })
-    return console.log(this.state.Title,this.state.Image)
   }
 
   componentDidMount(){    
     console.disableYellowBox = true
+    this.getWishList()
   }
 
   fetchMoreData=()=>{
-    const update = this.state.update
-    this.setState({update:update+5})
-    console.log(this.state.update)
+    this.setState({data:this.state.data+5})
   }
 
   renderView=({item})=>{
@@ -72,7 +105,7 @@ export default class VegMainScreen extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{alignSelf:'flex-start',marginTop:5,marginLeft:5}} onPress={()=>{/*this.setState({ Title:item.title , Image:item.url , navigation:item.navigation }) ,*/item.wishlistColor='red', this.WishList(item)}}>
+            <TouchableOpacity style={{alignSelf:'flex-start',marginTop:5,marginLeft:5}} onPress={()=>{ item.wishlistColor='#fc4c4e',this.WishList(item)}}>
               <Icon type='font-awesome' name='heart' color={item.wishlistColor} size={30}/>
             </TouchableOpacity>
           </View>
@@ -88,11 +121,7 @@ export default class VegMainScreen extends React.Component {
         data={db.slice(0,this.state.update)}
         renderItem={this.renderView}
         keyExtractor={(item,index)=>index.toString()}
-        onEndReached={this.fetchMoreData}
-        
-        // ListFooterComponent={this.loading}
-        
-        >
+        onEndReached={this.fetchMoreData}>
 
         </FlatList>
       </View>

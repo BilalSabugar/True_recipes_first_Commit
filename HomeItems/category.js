@@ -63,8 +63,8 @@ export default class category extends React.Component {
 <View style={{borderBottomWidth:0.5,borderBottomColor:"#ffffff"}}>
 
             <TouchableOpacity style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}
-            // onPress={()=>{this.props.navigation.navigate('Non_VegMainScreen')}}
-            onPress={()=>{Alert.alert('Locked')}}
+            onPress={()=>{this.props.navigation.navigate('Non_VegMainScreen')}}
+            // onPress={()=>{Alert.alert('Locked')}}
             >
 
               <View>
